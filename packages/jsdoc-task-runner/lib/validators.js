@@ -24,6 +24,23 @@ function checkTask(t) {
   };
 }
 
+// Factory function to create simple error classes with message validation
+function createErrorClass(name) {
+  const ErrorClass = class extends Error {
+    constructor(message) {
+      ow(message, ow.string);
+      super(message);
+
+      this.name = name;
+    }
+  };
+
+  // Set the class name for proper error identification
+  Object.defineProperty(ErrorClass, 'name', { value: name });
+
+  return ErrorClass;
+}
+
 export default {
   checkTaskOrString: ow.any(ow.object.validate(checkTask), ow.string),
   DependencyCycleError: class DependencyCycleError extends Error {
@@ -36,28 +53,7 @@ export default {
       this.name = 'DependencyCycleError';
     }
   },
-  StateError: class StateError extends Error {
-    constructor(message) {
-      ow(message, ow.string);
-      super(message);
-
-      this.name = 'StateError';
-    }
-  },
-  UnknownDependencyError: class UnknownDependencyError extends Error {
-    constructor(message) {
-      ow(message, ow.string);
-      super(message);
-
-      this.name = 'UnknownDependencyError';
-    }
-  },
-  UnknownTaskError: class UnknownTaskError extends Error {
-    constructor(message) {
-      ow(message, ow.string);
-      super(message);
-
-      this.name = 'UnknownTaskError';
-    }
-  },
+  StateError: createErrorClass('StateError'),
+  UnknownDependencyError: createErrorClass('UnknownDependencyError'),
+  UnknownTaskError: createErrorClass('UnknownTaskError'),
 };
