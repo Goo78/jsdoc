@@ -142,6 +142,12 @@ export default function help({ maxLength }) {
         description += ` Accepts these values: ${flagDetail.choices.join(', ')}`;
       }
 
+      if (flagDetail.defaultDescription) {
+        description += ` Default: ${flagDetail.defaultDescription}`;
+      } else if (flagDetail.default) {
+        description += ` Default: ${flagDetail.default}`;
+      }
+
       flagInfo.names.push(name);
       flagInfo.descriptions.push(description);
     });
