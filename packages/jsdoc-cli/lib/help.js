@@ -142,6 +142,16 @@ export default function help({ maxLength }) {
         description += ` Accepts these values: ${flagDetail.choices.join(', ')}`;
       }
 
+      if (flagDetail.defaultDescription) {
+        description += ` Default: ${flagDetail.defaultDescription}`;
+      } else if (flagDetail.default !== undefined) {
+        const defaultValue =
+          typeof flagDetail.default === 'object' && flagDetail.default !== null
+            ? JSON.stringify(flagDetail.default)
+            : String(flagDetail.default);
+        description += ` Default: ${defaultValue}`;
+      }
+
       flagInfo.names.push(name);
       flagInfo.descriptions.push(description);
     });
