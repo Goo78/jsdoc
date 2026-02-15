@@ -145,7 +145,11 @@ export default function help({ maxLength }) {
       if (flagDetail.defaultDescription) {
         description += ` Default: ${flagDetail.defaultDescription}`;
       } else if (flagDetail.default !== undefined) {
-        description += ` Default: ${flagDetail.default}`;
+        const defaultValue =
+          typeof flagDetail.default === 'object'
+            ? JSON.stringify(flagDetail.default)
+            : String(flagDetail.default);
+        description += ` Default: ${defaultValue}`;
       }
 
       flagInfo.names.push(name);
