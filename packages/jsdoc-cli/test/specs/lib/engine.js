@@ -410,6 +410,28 @@ describe('@jsdoc/cli/lib/engine', () => {
     it('throws on a bad maxLength option', () => {
       expect(() => instance.help({ maxLength: 'long' })).toThrow();
     });
+
+    it('displays default values for flags with default property', () => {
+      const help = instance.help();
+
+      expect(help).toContain('Default: ./out');
+      expect(help).toContain('Default: utf8');
+    });
+
+    it('displays custom default descriptions when provided', () => {
+      const help = instance.help();
+
+      expect(help).toContain('Default: All except `private`');
+    });
+
+    it('does not display default for flags without default or defaultDescription', () => {
+      const help = instance.help();
+      const lines = help.split('\n');
+      const helpLine = lines.find((line) => line.includes('--help'));
+
+      expect(helpLine).toBeDefined();
+      expect(helpLine).not.toContain('Default:');
+    });
   });
 
   describe('loadConfig', () => {
