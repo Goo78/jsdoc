@@ -144,7 +144,7 @@ export default function help({ maxLength }) {
 
       if (flagDetail.defaultDescription) {
         description += ` Default: ${flagDetail.defaultDescription}`;
-      } else if (flagDetail.default) {
+      } else if (flagDetail.default !== undefined) {
         description += ` Default: ${flagDetail.default}`;
       }
 
