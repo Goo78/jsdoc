@@ -146,7 +146,7 @@ export default function help({ maxLength }) {
         description += ` Default: ${flagDetail.defaultDescription}`;
       } else if (flagDetail.default !== undefined) {
         const defaultValue =
-          typeof flagDetail.default === 'object'
+          typeof flagDetail.default === 'object' && flagDetail.default !== null
             ? JSON.stringify(flagDetail.default)
             : String(flagDetail.default);
         description += ` Default: ${defaultValue}`;
